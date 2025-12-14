@@ -1,0 +1,18 @@
+services:
+  db-pg:
+    container_name: pg-1.0.0
+    image: bitnami/postgresql:latest
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=docker-user
+      - POSTGRES_PASSWORD=docker-password
+      - POSTGRES_DB=orders
+
+  roboshop-orders:
+    container_name: orders-1.0.0
+    image: orders-1.0.0
+    ports:
+      - 3333:3333
+    depends_on:
+      - db-pg

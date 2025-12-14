@@ -1,0 +1,21 @@
+# Common
+README.md
+CHANGELOG.md
+Dockerfile
+
+# git
+.git
+.gitattributes
+.gitignore
+
+# Node
+logs
+*.log
+npm-debug.log*
+node_modules/
+
+# Artefacts
+dist
+
+# Envs
+.env*
