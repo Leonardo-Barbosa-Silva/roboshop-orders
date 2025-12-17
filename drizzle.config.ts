@@ -1,15 +1,18 @@
+// For TS to know about the node environment
+/// <reference types="node" />
+
 import { defineConfig } from 'drizzle-kit';
 
-import { env } from './src/env.js';
+if (!process.env.POSTGRES_DATABASE_URL) {
+  throw new Error('POSTGRES_DATABASE_URL env must exists.');
+}
 
 export default defineConfig({
   dialect: 'postgresql',
-  schema: 'src/db/schemas/*',
+  schema: 'src/db/schemas/drizzle.ts',
   out: 'drizzle/migrations',
   casing: 'snake_case',
   dbCredentials: {
-    url: `
-        postgresql://${env.POSTGRES_USER}:${env.POSTGRES_PASSWORD}@${env.POSTGRES_HOST}:${env.POSTGRES_PORT}/${env.POSTGRES_DB}
-    `,
+    url: process.env.POSTGRES_DATABASE_URL,
   },
 });

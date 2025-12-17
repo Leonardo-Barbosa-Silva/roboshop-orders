@@ -8,7 +8,9 @@
     "build": "tsc",
     "type-check": "tsc --noEmit",
     "start": "node dist/http/server.js",
-    "lint": "eslint . --fix"
+    "lint": "eslint . --fix",
+    "db:generate": "node --env-file=.env.local ./node_modules/.bin/drizzle-kit generate",
+    "db:migrate": "node --env-file=.env.local ./node_modules/.bin/drizzle-kit migrate"
   },
   "repository": {
     "type": "git",
@@ -27,21 +29,24 @@
     "drizzle-orm": "^0.45.1",
     "fastify": "^5.6.2",
     "fastify-type-provider-zod": "^6.1.0",
+    "pg": "^8.16.3",
     "zod": "^4.1.13"
   },
   "devDependencies": {
+    "@eslint/js": "^9.39.2",
     "@tsconfig/node22": "^22.0.5",
     "@types/node": "^25.0.2",
     "@typescript-eslint/eslint-plugin": "^8.49.0",
     "@typescript-eslint/parser": "^8.49.0",
+    "dotenv": "^17.2.3",
     "drizzle-kit": "^0.31.8",
     "eslint": "^9.39.2",
     "eslint-config-prettier": "^10.1.8",
-    "eslint-import-resolver-typescript": "^4.4.4",
-    "eslint-plugin-import": "^2.32.0",
-    "eslint-plugin-prettier": "^5.5.4",
+    "globals": "^16.5.0",
+    "jiti": "^2.6.1",
     "prettier": "^3.7.4",
     "tsx": "^4.21.0",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.50.0"
   }
 }
