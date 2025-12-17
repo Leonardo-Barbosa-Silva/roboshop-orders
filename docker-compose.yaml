@@ -9,14 +9,15 @@ services:
       - POSTGRES_PASSWORD=docker-password
       - POSTGRES_DB=orders
 
-  roboshop-api:
-    container_name: roboshop-api
+  roboshop-orders-api:
+    container_name: roboshop-orders-api
     build:
       context: .
     ports:
       - 3333:3333
     depends_on:
       - db-pg
+      - rabbitmq
     env_file:
       - .env.local
     environment:

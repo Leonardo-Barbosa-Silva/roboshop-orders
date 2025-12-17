@@ -1,13 +1,13 @@
 {
   "name": "orders",
   "version": "1.0.0",
-  "main": "src/http/server.ts",
+  "main": "src/server.ts",
   "type": "module",
   "scripts": {
-    "dev": "tsx watch --env-file=.env.local src/http/server.ts",
+    "dev": "tsx watch --env-file=.env.local src/server.ts",
     "build": "tsc",
     "type-check": "tsc --noEmit",
-    "start": "node dist/http/server.js",
+    "start": "node dist/server.js",
     "lint": "eslint . --fix",
     "db:generate": "node --env-file=.env.local ./node_modules/.bin/drizzle-kit generate",
     "db:migrate": "node --env-file=.env.local ./node_modules/.bin/drizzle-kit migrate"
@@ -26,6 +26,7 @@
   "description": "",
   "dependencies": {
     "@fastify/cors": "^11.2.0",
+    "amqplib": "^0.10.9",
     "drizzle-orm": "^0.45.1",
     "fastify": "^5.6.2",
     "fastify-type-provider-zod": "^6.1.0",
@@ -35,6 +36,7 @@
   "devDependencies": {
     "@eslint/js": "^9.39.2",
     "@tsconfig/node22": "^22.0.5",
+    "@types/amqplib": "^0.10.8",
     "@types/node": "^25.0.2",
     "@typescript-eslint/eslint-plugin": "^8.49.0",
     "@typescript-eslint/parser": "^8.49.0",

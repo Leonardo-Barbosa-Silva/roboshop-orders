@@ -22,4 +22,4 @@ USER node
 
 EXPOSE 3333
 
-CMD ["node", "dist/http/server.js"]
+CMD ["node", "dist/server.js"]
