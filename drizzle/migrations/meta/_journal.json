@@ -8,6 +8,20 @@
       "when": 1765930571955,
       "tag": "0000_spicy_boom_boom",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1766262488916,
+      "tag": "0001_cooing_magneto",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1766265414281,
+      "tag": "0002_lumpy_korath",
+      "breakpoints": true
     }
   ]
 }

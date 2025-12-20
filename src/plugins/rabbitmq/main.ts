@@ -13,11 +13,6 @@ interface RabbitMQOptions {
   queues: string[];
 }
 
-interface CreateRabbitMQConnectionResult {
-  connection: Connection;
-  channel: ConfirmChannel;
-}
-
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export const rabbitmqPlugin = fastifyPlugin<RabbitMQOptions>(
@@ -28,7 +23,7 @@ export const rabbitmqPlugin = fastifyPlugin<RabbitMQOptions>(
       isReady: false,
     };
 
-    async function createRabbitMQConnection(): Promise<CreateRabbitMQConnectionResult> {
+    async function createRabbitMQConnection(): Promise<void> {
       const { url, queues } = options;
 
       for (let attempt = 1; attempt <= 5; attempt++) {
@@ -67,7 +62,7 @@ export const rabbitmqPlugin = fastifyPlugin<RabbitMQOptions>(
 
           fastify.log.info({ service: 'rabbitmq' }, 'Connection established');
 
-          return { connection, channel };
+          return;
         } catch (error) {
           fastify.log.error(
             { service: 'rabbitmq', error },
@@ -84,13 +79,7 @@ export const rabbitmqPlugin = fastifyPlugin<RabbitMQOptions>(
       throw new Error('Failed to connect to RabbitMQ');
     }
 
-    fastify.addHook('onReady', async () => {
-      const { connection, channel } = await createRabbitMQConnection();
-
-      state.connection = connection;
-      state.channel = channel;
-      state.isReady = true;
-    });
+    await createRabbitMQConnection();
 
     fastify.addHook('onClose', async () => {
       await state.channel?.close();
@@ -128,5 +117,8 @@ export const rabbitmqPlugin = fastifyPlugin<RabbitMQOptions>(
         await channel.waitForConfirms();
       },
     });
+  },
+  {
+    name: 'rabbitmq-plugin',
   },
 );

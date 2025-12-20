@@ -1,4 +1,16 @@
 services:
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:3-management
+    ports:
+      - 5672:5672
+      - 15672:15672
+    environment:
+      - RABBITMQ_DEFAULT_USER=docker-user
+      - RABBITMQ_DEFAULT_PASS=docker-password
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+
   db-pg:
     container_name: db-pg
     image: bitnami/postgresql:latest
@@ -23,18 +35,6 @@ services:
     environment:
       - NODE_ENV=production
       - PORT=3333
-
-  rabbitmq:
-    container_name: rabbitmq
-    image: rabbitmq:3-management
-    ports:
-      - 5672:5672
-      - 15672:15672
-    environment:
-      - RABBITMQ_DEFAULT_USER=docker-user
-      - RABBITMQ_DEFAULT_PASS=docker-password
-    volumes:
-      - rabbitmq_data:/var/lib/rabbitmq
 
 volumes:
   rabbitmq_data:
