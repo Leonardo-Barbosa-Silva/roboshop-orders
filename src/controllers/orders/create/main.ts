@@ -1,7 +1,6 @@
 import type { FastifyInstance } from 'fastify';
 import type { ZodTypeProvider } from 'fastify-type-provider-zod';
 import { z } from 'zod';
-import { channels } from '../../../rabbitmq/channels/index.js';
 
 export async function createOrderController(fastify: FastifyInstance) {
   fastify.withTypeProvider<ZodTypeProvider>().post(
@@ -16,9 +15,10 @@ export async function createOrderController(fastify: FastifyInstance) {
     async (request, reply) => {
       const { amount } = request.body;
 
-      const { channel, queue } = await channels.createOrdersChannel();
-
-      channel.sendToQueue(queue, Buffer.from(JSON.stringify({ amount })));
+      fastify.rabbitmq.publish({
+        queue: 'orders',
+        content: Buffer.from(JSON.stringify({ amount })),
+      });
 
       reply.status(201).send({ amount });
     },

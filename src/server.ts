@@ -7,6 +7,7 @@ import {
 
 import { env } from './env.js';
 import { appRoutes } from './routes/index.js';
+import { rabbitmqPlugin } from './plugins/rabbitmq/main.js';
 
 function buildApp() {
   const app = fastify({
@@ -18,6 +19,11 @@ function buildApp() {
 
   app.get('/health', (_, reply) => {
     reply.status(200).send({ status: 'ok' });
+  });
+
+  app.register(rabbitmqPlugin, {
+    url: env.RABBITMQ_URL,
+    queues: ['orders'],
   });
 
   app.register(appRoutes);
@@ -43,7 +49,6 @@ async function bootstrap() {
 
   // Shutdown when O.S sends SIGTERM (ex: docker stop)
   process.on('SIGTERM', () => void shutdown('SIGTERM'));
-
   // Shutdown when O.S sends SIGINT (user presses Ctrl+C)
   process.on('SIGINT', () => void shutdown('SIGINT'));
 
